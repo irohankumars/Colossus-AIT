@@ -9,7 +9,7 @@ const Footer = () => {
         {/* Left */}
         <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
           <span className="font-display text-sm tracking-widest">
-            DIVYASREE
+            Ideas into impact
           </span>
           <span className="text-xs text-muted-foreground font-body">
             © {currentYear} All rights reserved

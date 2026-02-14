@@ -3,9 +3,9 @@ import { motion, useInView } from 'framer-motion';
 import { ArrowUpRight, Github, Instagram, Linkedin } from 'lucide-react';
 
 const socials = [
-  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/divyasree_0197/' },
-  { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/divyasree-madduri-724a07255/' },
-  { name: 'GitHub', icon: Github, href: 'https://github.com/Divyasree00' },
+  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/colossus_ise/' },
+  { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/colossus-ise-club' },
+  { name: 'GitHub', icon: Github, href: 'https://github.com/Colossus-AIT' },
 ];
 
 const ContactSection = () => {
@@ -64,8 +64,8 @@ const ContactSection = () => {
             <span className="italic font-light">together</span>
           </h2>
           <p className="text-muted-foreground font-body max-w-md">
-            Available for freelance projects, collaborations, and full-time opportunities. 
-            Let's talk about your next project.
+           Driven by learning. Powered by teamwork.
+           Let’s build something meaningful.
           </p>
         </motion.div>
 
@@ -77,11 +77,11 @@ const ContactSection = () => {
           className="mb-20"
         >
           <a
-            href="mailto:divyasree.madduri0320@gmail.com"
+            href="mailto:colossusise@gmail.com"
             className="group inline-flex items-center gap-4"
           >
             <span className="font-display text-xl md:text-3xl tracking-tight transition-all duration-300 group-hover:font-bold editorial-link">
-              divyasree.madduri0320@gmail.com
+              colossusise@gmail.com
             </span>
             <motion.div
               whileHover={{ x: 5, y: -5 }}

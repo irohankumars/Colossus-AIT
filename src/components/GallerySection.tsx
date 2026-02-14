@@ -8,17 +8,17 @@ interface GalleryItem {
 }
 
 const galleryItems: GalleryItem[] = [
-  { id: 1, text: "Heyyy", image: "/images/gallery/img1.jpeg" },
+  { id: 1, text: "Heyyy", image: "/images/gallery/img1.jpg" },
   { id: 2, text: "Butterfly", image: "/images/gallery/img2.jpg" },
-  { id: 3, text: "chrysanthemum", image: "/images/gallery/img3.jpeg" },
-  { id: 4, text: "Wall Art", image: "/images/gallery/img4.jpeg" },
-  { id: 5, text: "Lily", image: "/images/gallery/img5.jpg" },
-  { id: 6, text: "Yellow Peony", image: "/images/gallery/img6.jpeg" },
+  { id: 3, text: "chrysanthemum", image: "/images/gallery/img3.jpg" },
+  { id: 4, text: "Wall Art", image: "/images/gallery/img4.jpg" },
+  { id: 5, text: "Lily", image: "/images/gallery/img18.jpg" },
+  { id: 6, text: "Yellow Peony", image: "/images/gallery/img6.jpg" },
   { id: 7, text: "Guest!", image: "/images/gallery/img7.jpg" },
-  { id: 8, text: "Reward", image: "/images/gallery/img8.jpeg" },
+  { id: 8, text: "Reward", image: "/images/gallery/img8.jpg" },
   { id: 9, text: "Wall Art", image: "/images/gallery/img9.jpg" },
   { id: 10, text: "Guest!", image: "/images/gallery/img10.jpg" },
-  { id: 11, text: "Waterlily", image: "/images/gallery/img11.jpeg" },
+  { id: 11, text: "Waterlily", image: "/images/gallery/img11.jpg" },
 ];
 
 const GallerySection = () => {
@@ -84,7 +84,7 @@ const GallerySection = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="font-display text-4xl md:text-6xl tracking-tight mt-8"
         >
-          Selected Works
+            Gallery
         </motion.h2>
 
         <motion.p
