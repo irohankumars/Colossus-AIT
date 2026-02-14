@@ -63,23 +63,25 @@ const Navigation = ({ onThemeToggle, isDark }: NavigationProps) => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: 0.2 }}
-      className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex items-center justify-between transition-all duration-500 ${
-        scrolled ? 'bg-background/80 backdrop-blur-md' : ''
-      }`}
-    >
-          <motion.a
-  href="#hero"
-  className="flex items-center"
-  whileHover={{ scale: 1.05 }}
->
-  <img
-    src="/logos/Colossus_logo_png.png"
-    alt="Colossus Logo"
-    className="h-8 w-auto object-contain"
-  />
-</motion.a>
+className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex items-center transition-all duration-500 ${
+  scrolled ? 'bg-background/80 backdrop-blur-md' : ''
+}`}
 
-<div  style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+    
+    >
+<div className="w-full flex items-center justify-between">
+        <motion.a
+            href="#hero"
+            className="flex items-center"
+            whileHover={{ scale: 1.05 }}
+          >
+            <img
+              src="/logos/Colossus_logo_png.png"
+              alt="Colossus Logo"
+              className="h-8 w-auto object-contain"
+            />
+          </motion.a>
+
 
       {/* Pill Navigation */}
       <PillNav
@@ -87,13 +89,13 @@ const Navigation = ({ onThemeToggle, isDark }: NavigationProps) => {
         logoAlt="Colossus Logo"
         items={navItems}
         activeHref={location.pathname}
-        baseColor="#"              // keep base fixed
-        pillColor={isDark ? '#000000': '#ffffff'}              // keep pill background fixed
+        baseColor="transparent"             // keep base fixed
+        pillColor="transparent"             // keep pill background fixed
         pillTextColor={isDark ? '#ffffff' : '#000000'}
         hoveredPillTextColor={isDark ? '#ffffff' : '#000000'}
         initialLoadAnimation={false}
-/>
-</div>
+      />
+
 
 
 
@@ -165,6 +167,7 @@ const Navigation = ({ onThemeToggle, isDark }: NavigationProps) => {
           </AnimatePresence>
         </motion.button>
       </div>
+    </div>
     </motion.nav>
   );
 };

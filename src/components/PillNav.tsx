@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { createPortal } from "react-dom";
 import { gsap } from 'gsap';
 import './PillNav.css';
 
@@ -240,7 +241,7 @@ const PillNav: React.FC<PillNavProps> = ({
     ['--base']: baseColor,
     ['--pill-bg']: pillColor,
     ['--hover-text']: hoveredPillTextColor,
-    ['--pill-text']: resolvedPillTextColor
+    ['--pill-text']: resolvedPillTextColor,
   } as React.CSSProperties;
 
   return (
@@ -314,31 +315,40 @@ const PillNav: React.FC<PillNavProps> = ({
         </button>
       </nav>
 
-      <div className="mobile-menu-popover mobile-only" ref={mobileMenuRef} style={cssVars}>
-        <ul className="mobile-menu-list">
-          {items.map(item => (
-            <li key={item.href}>
-              {isRouterLink(item.href) ? (
-                <Link
-                  to={item.href}
-                  className={`mobile-menu-link${activeHref === item.href ? ' is-active' : ''}`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ) : (
-                <a
-                  href={item.href}
-                  className={`mobile-menu-link${activeHref === item.href ? ' is-active' : ''}`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+     {isMobileMenuOpen &&
+  createPortal(
+    <div
+      className="mobile-menu-popover mobile-only"
+      ref={mobileMenuRef}
+      style={cssVars}
+    >
+      <ul className="mobile-menu-list">
+        {items.map(item => (
+          <li key={item.href}>
+            {isRouterLink(item.href) ? (
+              <Link
+                to={item.href}
+                className={`mobile-menu-link${activeHref === item.href ? ' is-active' : ''}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <a
+                href={item.href}
+                className={`mobile-menu-link${activeHref === item.href ? ' is-active' : ''}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>,
+    document.body
+  )}
+
     </div>
   );
 };
