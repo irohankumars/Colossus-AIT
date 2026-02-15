@@ -1,6 +1,6 @@
 'use client';
 import React, { useMemo, useRef, useEffect, useCallback } from 'react';
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 /* Motion */
 const letterVariants = {
@@ -104,6 +104,9 @@ const ThreeDCarousel = React.memo(
   }: ThreeDCarouselProps) => {
     const parentRef = useRef<HTMLDivElement>(null);
     const wheelRef = useRef<HTMLDivElement>(null);
+      const containerRef = useRef<HTMLDivElement>(null);
+
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
     const rotationRef = useRef(0);
     const tiltRef = useRef(0);
@@ -212,18 +215,32 @@ const ThreeDCarousel = React.memo(
     const titleText = "HEADER"
 
     return (
-<div>
-<section className="px-6 md:px-12 lg:px-24 py-10 scroll-mt-24" id='updates'>
-    <motion.h2
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true, margin: "-100px" }}
-  transition={{ duration: 0.6, delay: 0.1 }}
-  className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-12 tracking-tight"
+<section
+  ref={containerRef}
+  id="updates"
+  className="px-6 md:px-12 lg:px-24 py-16 scroll-mt-24"
 >
-  Updates
-</motion.h2>
-</section>
+  <motion.div
+    initial={{ opacity: 0, x: -50 }}
+    animate={isInView ? { opacity: 1, x: 0 } : {}}
+    transition={{ duration: 0.8 }}
+    className="mb-6"
+  >
+    <span className="text-xs tracking-[0.3em] text-muted-foreground font-body">
+      002 / IN ACTION
+    </span>
+  </motion.div>
+
+  <motion.h2
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-100px" }}
+    transition={{ duration: 0.6, delay: 0.1 }}
+    className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-12 tracking-tight"
+  >
+    Updates
+  </motion.h2>
+
 
 
          <div
@@ -280,7 +297,7 @@ const ThreeDCarousel = React.memo(
           </div>
         </div>
       </div>
-</div>
+</section>
     );
   }
 );

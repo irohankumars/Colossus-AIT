@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
+
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import EventsSection from "./components/EventsSection";
@@ -28,6 +29,18 @@ const ScrollToHash = () => {
 
   return null;
 };
+
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [pathname]);
+
+  return null;
+};
+
 
 const App = () => {
   const [isDark, setIsDark] = useState(true);
@@ -57,6 +70,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+         <ScrollToTop />
           <ScrollToHash />
 
           <div className="relative min-h-screen">

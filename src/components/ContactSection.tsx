@@ -46,7 +46,7 @@ className="flex items-center justify-center py-16 px-6 md:px-12 relative overflo
           className="mb-16"
         >
           <span className="text-xs tracking-[0.3em] text-muted-foreground font-body">
-            005 / CONNECT
+            006 / CONNECT
           </span>
         </motion.div>
 

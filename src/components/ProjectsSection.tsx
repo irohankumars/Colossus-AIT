@@ -90,17 +90,26 @@ const ProjectsSection = () => {
       className="min-h-screen py-10 px-6 md:px-12 scroll-mt-24"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Section Label */}
-        <motion.div
+         {/* Section Label  */}
+         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
           <span className="text-xs tracking-[0.3em] text-muted-foreground font-body">
-            002 / PROJECTS
-          </span>
-        </motion.div>
+            003 / BUILD & BEYOND
+          </span> 
+         </motion.div>  
+                 <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-12 tracking-tight"
+        >
+          What We’ve Built
+        </motion.h2>
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

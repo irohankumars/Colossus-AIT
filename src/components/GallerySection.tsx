@@ -74,7 +74,7 @@ const GallerySection = () => {
           transition={{ duration: 0.8 }}
         >
           <span className="text-xs tracking-[0.3em] text-muted-foreground font-body">
-            003 / GALLERY
+            004 / MOMENTS
           </span>
         </motion.div>
 

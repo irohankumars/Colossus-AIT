@@ -78,7 +78,7 @@ className="flex flex-col items-center pt-16 pb-16 px-6 md:px-12"
           className="mb-24"
         >
           <span className="text-xs tracking-[0.3em] text-muted-foreground font-body">
-            004 / INSPIRATION
+            005 / QUOTES
           </span>
         </motion.div>
 
