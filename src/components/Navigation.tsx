@@ -48,14 +48,15 @@ const Navigation = ({ onThemeToggle, isDark }: NavigationProps) => {
     }
   };
 
-  const navItems: PillNavItem[] = [
-    { label: 'Home', href: '/' },
-    { label: 'Projects', href: '/projects' },
-    { label: 'Events', href: '/events' },
-    { label: 'Updates', href: '/updates' },
-    { label: 'Team', href: '/team' },
-    { label: 'Contact', href: '/contact' }
-  ];
+const navItems: PillNavItem[] = [
+  { label: 'Home', href: '/#hero' },
+  { label: 'Projects', href: '/#projects' },
+  { label: 'Events', href: '/events' },
+  { label: 'Updates', href: '/#updates' },
+  { label: 'Contact', href: '/#contact' }
+];
+
+
 
   return (
     
@@ -83,7 +84,8 @@ className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex items-center
           </motion.a>
 
 
-      {/* Pill Navigation */}
+
+         {/* Pill Navigation */}
       <PillNav
         logo="/logos/Colossus_logo_png.png"
         logoAlt="Colossus Logo"
@@ -95,6 +97,7 @@ className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex items-center
         hoveredPillTextColor={isDark ? '#ffffff' : '#000000'}
         initialLoadAnimation={false}
       />
+ 
 
 
 

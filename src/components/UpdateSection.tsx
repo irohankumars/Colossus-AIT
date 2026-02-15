@@ -213,7 +213,7 @@ const ThreeDCarousel = React.memo(
 
     return (
 <div>
-<section className="px-6 md:px-12 lg:px-24 py-12">
+<section className="px-6 md:px-12 lg:px-24 py-12" id='updates'>
     <motion.h2
   initial={{ opacity: 0, y: 20 }}
   whileInView={{ opacity: 1, y: 0 }}
