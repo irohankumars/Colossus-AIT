@@ -193,7 +193,7 @@ const EventsSection = () => {
                   {selectedEvent.category} — {selectedEvent.date}
                 </span>
 
-                <h2 className="font-display text-4xl md:text-5xl tracking-tight font-bold mb-8">
+                <h2 className="font-display text-2xl sm:text-3xl md:text-5xl tracking-tight font-bold mb-6 break-words">
                   {selectedEvent.title}
                 </h2>
 
