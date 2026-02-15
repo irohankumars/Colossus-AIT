@@ -56,7 +56,7 @@ const AboutSection = () => {
     <section
       ref={containerRef}
       id="about"
-      className="min-h-screen flex items-center justify-center py-20 px-6 md:px-12"
+      className="min-h-screen flex items-center justify-center py-10 px-6 md:px-12 scroll-mt-24"
     >
       <div className="max-w-4xl mx-auto">
         {/* Section Label */}

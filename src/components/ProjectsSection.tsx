@@ -87,7 +87,7 @@ const ProjectsSection = () => {
     <section
       ref={containerRef}
       id="projects"
-      className="min-h-screen py-20 px-6 md:px-12"
+      className="min-h-screen py-10 px-6 md:px-12 scroll-mt-24"
     >
       <div className="max-w-7xl mx-auto">
         {/* Section Label */}

@@ -16,7 +16,7 @@ const ContactSection = () => {
     <section
       ref={containerRef}
       id="contact"
-      className="min-h-screen flex items-center justify-center py-32 px-6 md:px-12 relative overflow-hidden"
+className="flex items-center justify-center py-16 px-6 md:px-12 relative overflow-hidden scroll-mt-24"
     >
       {/* Subtle Background Animation */}
       <div className="absolute inset-0 opacity-[0.02]">

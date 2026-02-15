@@ -51,7 +51,7 @@ const SkillsSection = () => {
     <section
       ref={sectionRef}
       id="skills"
-      className="min-h-[60vh] flex flex-col justify-center px-6 md:px-12 lg:px-24 py-16"
+      className="min-h-[60vh] flex flex-col justify-center px-6 md:px-12 lg:px-24 py-16 scroll-mt-24"
     >
       {/* Section Label */}
       <motion.div

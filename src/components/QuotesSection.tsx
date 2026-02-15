@@ -67,7 +67,7 @@ const QuotesSection = () => {
     <section
       ref={containerRef}
       id="quotes"
-      className="min-h-screen flex flex-col items-center justify-center py-32 px-6 md:px-12"
+className="flex flex-col items-center pt-16 pb-16 px-6 md:px-12"
     >
       <div className="max-w-4xl mx-auto w-full">
         {/* Section Label */}

@@ -52,7 +52,7 @@ const HeroSection = () => {
     <section
       ref={containerRef}
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden px-6"
+      className="relative h-[80svh] flex flex-col justify-center items-center overflow-hidden px-6 scroll-mt-24"
     >
       {/* Background Subtle Grid */}
       <div className="absolute inset-0 opacity-[0.02]">
@@ -66,7 +66,7 @@ const HeroSection = () => {
       {/* Main Title */}
       <motion.div
         style={{ x: textX, y: textY }}
-        className="relative z-10 text-center"
+        className="relative z-10 text-center "
       >
         {/* Overline */}
         <motion.span
@@ -78,8 +78,8 @@ const HeroSection = () => {
             2026
         </motion.span>
 
-        {/* Main Title Letters */}
-        <h1 className="font-display text-[15vw] md:text-[12vw] leading-[0.85] tracking-tighter font-bold">
+       {/* Main Title Letters */}
+        <h1 className="font-display text-[11vw] sm:text-[12vw] md:text-[12vw] leading-[0.85] tracking-tighter font-bold">
           <div className="overflow-hidden">
             {titleText.split('').map((letter, i) => (
               <motion.span
@@ -133,7 +133,7 @@ const HeroSection = () => {
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           className="flex flex-col items-center gap-2"
         >
-          <span className="text-xs tracking-widest text-muted-foreground">SCROLL</span>
+          <span className="text-xs tracking-widest text-muted-foreground ">SCROLL</span>
           <div className="w-px h-12 bg-gradient-to-b from-foreground to-transparent" />
         </motion.div>
       </motion.div>
