@@ -1,27 +1,16 @@
 'use client';
-import React, { useMemo, useRef, useEffect, useCallback } from 'react';
-import { motion, useInView } from "framer-motion";
+import React, {
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+  useCallback
+} from 'react';
+import { motion, useInView } from 'framer-motion';
 
-/* Motion */
-const letterVariants = {
-  initial: { opacity: 0, y: 100, filter: 'blur(10px)' },
-  animate: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: {
-      duration: 0.8,
-      delay: i * 0.05 + 0.5,
-    },
-  }),
-};
-
-/* 1️⃣  Assets ————————————————————————— */
+/* Fallback */
 const FALLBACK =
-  'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" ' +
-  'width="160" height="220"><rect width="100%" height="100%" ' +
-  'fill="%23e2e8f0"/><text x="50%" y="50%" dominant-baseline="middle"' +
-  ' text-anchor="middle" fill="%234a5568" font-size="18">Image</text></svg>';
+  'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="220"><rect width="100%" height="100%" fill="%23e2e8f0"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%234a5568" font-size="18">Image</text></svg>';
 
 const DEFAULT_IMAGES = [
   'https://i.pinimg.com/736x/9f/09/45/9f0945103fc6158cb16e1828a2665b5c.jpg',
@@ -32,18 +21,7 @@ const DEFAULT_IMAGES = [
   'https://i.pinimg.com/736x/5d/bf/f2/5dbff2b4c0fdcb9815e989f0db386f95.jpg',
 ];
 
-/* 2️⃣  Config ————————————————————————— */
-const CARD_W = 260;
-const CARD_H = 340;
-const RADIUS = 360;
-const TILT_SENSITIVITY = 10;
-const DRAG_SENSITIVITY = 0.5;
-const INERTIA_FRICTION = 0.95;
-const AUTOSPIN_SPEED = 0.05;
-const IDLE_TIMEOUT = 300;
-
-
-/* 3️⃣  Card Component (Memoized for Performance) ——— */
+/* Card Component */
 interface CardProps {
   src: string;
   transform: string;
@@ -63,17 +41,12 @@ const Card = React.memo(({ src, transform, cardW, cardH }: CardProps) => (
     }}
   >
     <div
-      className="w-full h-full rounded-2xl overflow-hidden bg-white dark:bg-gray-800
-                 border border-gray-200 dark:border-gray-700 shadow-lg dark:shadow-gray-900/50
-                 transition-transform duration-300 hover:scale-105 hover:shadow-2xl dark:hover:shadow-gray-900/70
-                 hover:z-10"
+      className="w-full h-full rounded-2xl overflow-hidden border border-border shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
       style={{ backfaceVisibility: 'hidden' }}
     >
       <img
         src={src}
         alt="Carousel item"
-        width={cardW}
-        height={cardH}
         className="w-full h-full object-cover"
         loading="lazy"
         draggable="false"
@@ -87,170 +60,149 @@ const Card = React.memo(({ src, transform, cardW, cardH }: CardProps) => (
 
 Card.displayName = 'Card';
 
-/* 4️⃣  Main component —————————————————— */
-interface ThreeDCarouselProps {
-  images?: string[];
-  radius?: number;
-  cardW?: number;
-  cardH?: number;
-}
+/* Main Component */
+const ThreeDCarousel = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const parentRef = useRef<HTMLDivElement>(null);
+  const wheelRef = useRef<HTMLDivElement>(null);
 
-const ThreeDCarousel = React.memo(
-  ({
-    images = DEFAULT_IMAGES,
-    radius = RADIUS,
-    cardW = CARD_W,
-    cardH = CARD_H,
-  }: ThreeDCarouselProps) => {
-    const parentRef = useRef<HTMLDivElement>(null);
-    const wheelRef = useRef<HTMLDivElement>(null);
-      const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: '-100px' });
 
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  const [isMobile, setIsMobile] = useState(false);
 
-    const rotationRef = useRef(0);
-    const tiltRef = useRef(0);
-    const targetTiltRef = useRef(0);
-    const velocityRef = useRef(0);
-    const isDraggingRef = useRef(false);
-    const dragStartRef = useRef(0);
-    const initialRotationRef = useRef(0);
-    const lastInteractionRef = useRef(Date.now());
-    const animationFrameRef = useRef<number | null>(null);
-    const isHoveredRef = useRef(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
-    // useEffect(() => {
-    //   const handleMouseMove = (e: MouseEvent) => {
-    //     if (!parentRef.current || isDraggingRef.current) return;
+  /* Responsive Physics */
+  const CARD_W = isMobile ? 160 : 260;
+  const CARD_H = isMobile ? 210 : 340;
+  const RADIUS = isMobile ? 180 : 360;
 
-    //     lastInteractionRef.current = Date.now();
-    //     const parentRect = parentRef.current.getBoundingClientRect();
-    //     const mouseY = e.clientY - parentRect.top;
-    //     const normalizedY = (mouseY / parentRect.height - 0.5) * 2;
+  const DRAG_SENSITIVITY = isMobile ? 0.9 : 0.5;
+  const AUTOSPIN_SPEED = isMobile ? 0.15 : 0.05;
+  const INERTIA_FRICTION = 0.95;
+  const IDLE_TIMEOUT = 300;
 
-    //     targetTiltRef.current = -normalizedY * TILT_SENSITIVITY;
-    //   };
+  /* Motion State */
+  const rotationRef = useRef(0);
+  const velocityRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const dragStartRef = useRef(0);
+  const initialRotationRef = useRef(0);
+  const lastInteractionRef = useRef(Date.now());
+  const animationFrameRef = useRef<number | null>(null);
+  const isHoveredRef = useRef(false);
 
-    //   window.addEventListener('mousemove', handleMouseMove);
-
-    //   return () => {
-    //     window.removeEventListener('mousemove', handleMouseMove);
-    //   };
-    // }, []);
-
-    useEffect(() => {
-      const animate = () => {
-        if (!isDraggingRef.current && !isHoveredRef.current) {
-          // Apply inertia
-          if (Math.abs(velocityRef.current) > 0.01) {
-            rotationRef.current += velocityRef.current;
-            velocityRef.current *= INERTIA_FRICTION;
-          } else if (Date.now() - lastInteractionRef.current > IDLE_TIMEOUT) {
-            rotationRef.current += AUTOSPIN_SPEED;
-          }
+  /* Animation Loop */
+  useEffect(() => {
+    const animate = () => {
+      if (!isDraggingRef.current && !isHoveredRef.current) {
+        if (Math.abs(velocityRef.current) > 0.01) {
+          rotationRef.current += velocityRef.current;
+          velocityRef.current *= INERTIA_FRICTION;
+        } else if (Date.now() - lastInteractionRef.current > IDLE_TIMEOUT) {
+          rotationRef.current += AUTOSPIN_SPEED;
         }
+      }
 
-       if (wheelRef.current) {
-  wheelRef.current.style.transform =
-    `rotateY(${rotationRef.current}deg)`;
-}
-
-
-        animationFrameRef.current = requestAnimationFrame(animate);
-      };
+      if (wheelRef.current) {
+        wheelRef.current.style.transform = `rotateY(${rotationRef.current}deg)`;
+      }
 
       animationFrameRef.current = requestAnimationFrame(animate);
+    };
 
-      return () => {
-        if (animationFrameRef.current) {
-          cancelAnimationFrame(animationFrameRef.current);
-        }
-      };
-    }, []);
+    animationFrameRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [AUTOSPIN_SPEED]);
 
-    const handleDragStart = useCallback((clientX: number) => {
-      lastInteractionRef.current = Date.now();
-      isDraggingRef.current = true;
-      velocityRef.current = 0;
-      dragStartRef.current = clientX;
-      initialRotationRef.current = rotationRef.current;
-    }, []);
+  /* Drag Logic */
+  const handleDragStart = useCallback((clientX: number) => {
+    isDraggingRef.current = true;
+    velocityRef.current = 0;
+    dragStartRef.current = clientX;
+    initialRotationRef.current = rotationRef.current;
+  }, []);
 
-    const handleDragMove = useCallback((clientX: number) => {
+  const handleDragMove = useCallback(
+    (clientX: number) => {
       if (!isDraggingRef.current) return;
-      lastInteractionRef.current = Date.now();
-
       const deltaX = clientX - dragStartRef.current;
-      const newRotation = initialRotationRef.current + deltaX * DRAG_SENSITIVITY;
-
+      const newRotation =
+        initialRotationRef.current + deltaX * DRAG_SENSITIVITY;
       velocityRef.current = newRotation - rotationRef.current;
       rotationRef.current = newRotation;
-    }, []);
+    },
+    [DRAG_SENSITIVITY]
+  );
 
-    // Handle drag end
-    const handleDragEnd = useCallback(() => {
-      isDraggingRef.current = false;
-      lastInteractionRef.current = Date.now();
-    }, []);
+  const handleDragEnd = useCallback(() => {
+    isDraggingRef.current = false;
+  }, []);
 
-    // Event listeners for mouse and touch
-    const onMouseDown = (e: React.MouseEvent) => handleDragStart(e.clientX);
-    const onMouseMove = (e: React.MouseEvent) => handleDragMove(e.clientX);
-    const onTouchStart = (e: React.TouchEvent) => handleDragStart(e.touches[0].clientX);
-    const onTouchMove = (e: React.TouchEvent) => handleDragMove(e.touches[0].clientX);
+  const onMouseDown = (e: React.MouseEvent) => handleDragStart(e.clientX);
+  const onMouseMove = (e: React.MouseEvent) => handleDragMove(e.clientX);
+  const onTouchStart = (e: React.TouchEvent) =>
+    handleDragStart(e.touches[0].clientX);
+  const onTouchMove = (e: React.TouchEvent) =>
+    handleDragMove(e.touches[0].clientX);
 
-    /* Pre-compute card transforms (only re-computes if images/radius change) */
-    const cards = useMemo(
-      () =>
-        images.map((src, idx) => {
-          const angle = (idx * 360) / images.length;
-          return {
-            key: idx,
-            src,
-            transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
-          };
-        }),
-      [images, radius]
-    );
-    const titleText = "HEADER"
+  /* Cards */
+  const cards = useMemo(
+    () =>
+      DEFAULT_IMAGES.map((src, idx) => {
+        const angle = (idx * 360) / DEFAULT_IMAGES.length;
+        return {
+          key: idx,
+          src,
+          transform: `rotateY(${angle}deg) translateZ(${RADIUS}px)`,
+        };
+      }),
+    [RADIUS]
+  );
 
-    return (
-<section
-  ref={containerRef}
-  id="updates"
-  className="px-6 md:px-12 lg:px-24 py-16 scroll-mt-24"
->
-  <motion.div
-    initial={{ opacity: 0, x: -50 }}
-    animate={isInView ? { opacity: 1, x: 0 } : {}}
-    transition={{ duration: 0.8 }}
-    className="mb-6"
-  >
-    <span className="text-xs tracking-[0.3em] text-muted-foreground font-body">
-      002 / IN ACTION
-    </span>
-  </motion.div>
+  return (
+    <section
+      ref={containerRef}
+      id="updates"
+      className="px-6 md:px-12 lg:px-24 py-16 scroll-mt-24"
+    >
+      <motion.div
+        initial={{ opacity: 0, x: -50 }}
+        animate={isInView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 0.8 }}
+        className="mb-6"
+      >
+        <span className="text-xs tracking-[0.3em] text-muted-foreground">
+          002 / IN ACTION
+        </span>
+      </motion.div>
 
-  <motion.h2
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-100px" }}
-    transition={{ duration: 0.6, delay: 0.1 }}
-    className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-12 tracking-tight"
-  >
-    Updates
-  </motion.h2>
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-12 tracking-tight"
+      >
+        Updates
+      </motion.h2>
 
-
-
-         <div
+      <div
         ref={parentRef}
-        className="w-full h-full flex items-center justify-center overflow-hidden font-sans cursor-grab active:cursor-grabbing"
+        className="w-full flex items-center justify-center overflow-hidden cursor-grab active:cursor-grabbing"
         style={{ userSelect: 'none' }}
         onMouseEnter={() => (isHoveredRef.current = true)}
         onMouseLeave={() => {
-            isHoveredRef.current = false;
-            handleDragEnd();
+          isHoveredRef.current = false;
+          handleDragEnd();
         }}
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
@@ -258,50 +210,43 @@ const ThreeDCarousel = React.memo(
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={handleDragEnd}
-        >
-
+      >
         <div
           className="relative"
-         style={{
+          style={{
             perspective: 2000,
-            perspectiveOrigin: 'center',
-            width: radius * 2,
-            height: cardH * 1.4,
-            }}
-
+            width: RADIUS * 2,
+            height: CARD_H * 1.4,
+          }}
         >
           <div
             ref={wheelRef}
             className="relative"
             style={{
-              width: cardW,
-              height: cardH,
+              width: CARD_W,
+              height: CARD_H,
               transformStyle: 'preserve-3d',
-              willChange: 'transform',
               position: 'absolute',
               left: '50%',
               top: '50%',
-              marginLeft: -cardW / 2,
-              marginTop: -cardH / 2,
+              marginLeft: -CARD_W / 2,
+              marginTop: -CARD_H / 2,
             }}
-          > 
+          >
             {cards.map(card => (
               <Card
                 key={card.key}
                 src={card.src}
                 transform={card.transform}
-                cardW={cardW}
-                cardH={cardH}
+                cardW={CARD_W}
+                cardH={CARD_H}
               />
             ))}
           </div>
         </div>
       </div>
-</section>
-    );
-  }
-);
-
-ThreeDCarousel.displayName = 'ThreeDCarousel';
+    </section>
+  );
+};
 
 export default ThreeDCarousel;
