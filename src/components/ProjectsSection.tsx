@@ -150,11 +150,11 @@ const ProjectsSection = () => {
                 <div className="absolute inset-0 flex flex-col">
 
                   {/* Image */}
-<div className="relative w-full aspect-[2/3] overflow-hidden bg-black">
+                  <div className="relative w-full aspect-[2/3] overflow-hidden bg-black">
                     <img
                       src={project.image}
                       alt={project.title}
-className="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+                      className="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                       draggable="false"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />

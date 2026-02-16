@@ -173,7 +173,7 @@ const ThreeDCarousel = () => {
     <section
       ref={containerRef}
       id="updates"
-      className="px-6 md:px-12 lg:px-24 py-16 scroll-mt-24"
+      className="px-6 md:px-12 lg:px-24 py-6 scroll-mt-24"
     >
       <motion.div
         initial={{ opacity: 0, x: -50 }}
