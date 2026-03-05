@@ -51,42 +51,42 @@ const projects: Project[] = [
     githubUrl: "#",
     image:  "/images/posters/ComingSoon.jpg",
   },
-  {
-    id: 4,
-    title: "PROJECT FOUR",
-    category: "Mobile App",
-    year: "2024",
-    description: "A cross-platform mobile application",
-    details:
-      "A cross-platform mobile application focused on seamless user experience and cloud-based data storage.",
-    liveUrl: "#",
-    githubUrl: "#",
-    image:  "/images/posters/ComingSoon.jpg",
-  },
-  {
-    id: 5,
-    title: "PROJECT FIVE",
-    category: "Data Visualization",
-    year: "2024",
-    description: "An interactive analytics dashboard",
-    details:
-      "An interactive analytics dashboard with real-time visualization and optimized rendering.",
-    liveUrl: "#",
-    githubUrl: "#",
-    image:  "/images/posters/ComingSoon.jpg",
-  },
-  {
-    id: 6,
-    title: "PROJECT SIX",
-    category: "Full Stack Development",
-    year: "2023",
-    description: "A scalable SaaS-style web platform",
-    details:
-      "A scalable SaaS-style web platform featuring secure authentication and modular architecture.",
-    liveUrl: "#",
-    githubUrl: "#",
-    image: "/images/posters/ComingSoon.jpg",
-  },
+  // {
+  //   id: 4,
+  //   title: "PROJECT FOUR",
+  //   category: "Mobile App",
+  //   year: "2024",
+  //   description: "A cross-platform mobile application",
+  //   details:
+  //     "A cross-platform mobile application focused on seamless user experience and cloud-based data storage.",
+  //   liveUrl: "#",
+  //   githubUrl: "#",
+  //   image:  "/images/posters/ComingSoon.jpg",
+  // },
+  // {
+  //   id: 5,
+  //   title: "PROJECT FIVE",
+  //   category: "Data Visualization",
+  //   year: "2024",
+  //   description: "An interactive analytics dashboard",
+  //   details:
+  //     "An interactive analytics dashboard with real-time visualization and optimized rendering.",
+  //   liveUrl: "#",
+  //   githubUrl: "#",
+  //   image:  "/images/posters/ComingSoon.jpg",
+  // },
+  // {
+  //   id: 6,
+  //   title: "PROJECT SIX",
+  //   category: "Full Stack Development",
+  //   year: "2023",
+  //   description: "A scalable SaaS-style web platform",
+  //   details:
+  //     "A scalable SaaS-style web platform featuring secure authentication and modular architecture.",
+  //   liveUrl: "#",
+  //   githubUrl: "#",
+  //   image: "/images/posters/ComingSoon.jpg",
+  // },
 ];
 
 const ProjectsSection = () => {
